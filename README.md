@@ -1,4 +1,4 @@
-# IntelliRepo
+<p align="center">IntelliRepo</p>
 
 ### Intelligent Codebase Analysis & Engineering Risk Prediction Platform using Artificial Intelligence, Machine Learning, and Knowledge Graphs
 
