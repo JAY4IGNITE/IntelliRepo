@@ -3,7 +3,7 @@
 ### Intelligent Codebase Analysis & Engineering Risk Prediction Platform using Artificial Intelligence, Machine Learning, and Knowledge Graphs
 
 <p align="center">
-  <img src="C:\Users\ramuv\IntelliRepo\frontend\src\assets\intellirepo.png" alt="IntelliRepo AI Logo" width="180"/>
+  <img src="./frontend/src/assets/intellirepo.png" alt="IntelliRepo AI Logo" width="180"/>
 </p>
 
 <p align="center">
