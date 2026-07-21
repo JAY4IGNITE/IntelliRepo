@@ -7,4 +7,6 @@ router = APIRouter(
 
 @router.get("/test")
 def test():
-    return {"message": "Authentication API is working"}
+    return {
+        "message": "Authentication API is working"
+    }
