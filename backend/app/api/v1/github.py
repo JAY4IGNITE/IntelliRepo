@@ -1,8 +1,13 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import RedirectResponse
+from sqlalchemy.orm import Session
 import httpx
 
 from app.core.config import settings
+from app.dependencies.db import get_db
+from app.auth.dependencies import get_current_user
+from app.models.user import User
+from app.services import github_service
 
 router = APIRouter(
     prefix="/github",
@@ -27,7 +32,11 @@ def github_login():
 
 
 @router.get("/callback")
-async def github_callback(code: str):
+async def github_callback(
+    code: str,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
     token_url = "https://github.com/login/oauth/access_token"
 
     async with httpx.AsyncClient() as client:
@@ -64,7 +73,15 @@ async def github_callback(code: str):
 
     github_user = user_response.json()
 
+    current_user.github_id = str(github_user["id"])
+    current_user.github_username = github_user["login"]
+    current_user.github_avatar_url = github_user["avatar_url"]
+    current_user.github_access_token = access_token
+
+    db.commit()
+    db.refresh(current_user)
+
     return {
-        "access_token": access_token,
-        "github_user": github_user,
+        "message": "GitHub account linked successfully",
+        "github_username": current_user.github_username,
     }

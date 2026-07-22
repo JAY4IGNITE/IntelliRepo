@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import httpx
 
 GITHUB_API = "https://api.github.com"
