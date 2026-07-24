@@ -1,78 +1,64 @@
+import httpx
 from sqlalchemy.orm import Session
 
+from app.models.user import User
 from app.models.repository import Repository
-import app.repositories.repository_repository as repository_repository
-from app.services import github_service
 
 
-
-def list_repositories(db: Session):
-    """
-    Return all repositories.
-    """
-    return repository_repository.get_all(db)
+GITHUB_API = "https://api.github.com/user/repos"
 
 
-def get_repository(db: Session, repo_id: int):
-    """
-    Return a repository by ID.
-    """
-    return repository_repository.get_by_id(db, repo_id)
+async def sync_repositories(current_user: User, db: Session):
+    headers = {
+        "Authorization": f"Bearer {current_user.github_access_token}",
+        "Accept": "application/vnd.github+json",
+    }
 
+    async with httpx.AsyncClient() as client:
+        response = await client.get(GITHUB_API, headers=headers)
 
-def create_repository(db: Session, repository: Repository):
-    """ 
-    Create a new repository.
-    """
-    return repository_repository.create(db, repository)
+    if response.status_code != 200:
+        return {
+            "error": response.json()
+        }
 
-
-def delete_repository(db: Session, repo_id: int):
-    """
-    Delete a repository.
-    """
-    repository = repository_repository.get_by_id(db, repo_id)
-
-    if repository is None:
-        return None
-
-    repository_repository.delete(db, repository)
-
-    return repository
-
-
-
-async def sync_repositories(db, current_user):
-    repos = await github_service.get_user_repositories(
-        current_user.github_access_token
-    )
+    repositories = response.json()
 
     synced = []
 
-    for repo in repos:
+    for repo in repositories:
 
-        existing = repository_repository.get_by_github_repo_id(
-            db,
-            repo["id"],
+        existing = (
+            db.query(Repository)
+            .filter(
+                Repository.github_repo_id == str(repo["id"])
+            )
+            .first()
         )
 
         if existing:
-            synced.append(existing)
             continue
 
         new_repo = Repository(
-            github_repo_id=repo["id"],
+            user_id=current_user.id,
+            github_repo_id=str(repo["id"]),
             name=repo["name"],
             full_name=repo["full_name"],
             description=repo["description"],
             language=repo["language"],
+            stars=repo["stargazers_count"],
+            forks=repo["forks_count"],
+            open_issues=repo["open_issues_count"],
             default_branch=repo["default_branch"],
             html_url=repo["html_url"],
-            owner_id=current_user.id,
         )
 
-        synced.append(
-            repository_repository.create(db, new_repo)
-        )
+        db.add(new_repo)
+        synced.append(repo["name"])
 
-    return synced
+    db.commit()
+
+    return {
+        "message": "Repositories synced successfully",
+        "repositories": synced,
+    }

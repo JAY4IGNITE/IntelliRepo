@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 from app.database.base import Base
 
@@ -7,23 +8,19 @@ class Repository(Base):
     __tablename__ = "repositories"
 
     id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 
-    github_repo_id = Column(Integer, unique=True, nullable=False)
+    github_repo_id = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
+    full_name = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    language = Column(String, nullable=True)
 
-    name = Column(String(255), nullable=False)
+    stars = Column(Integer, default=0)
+    forks = Column(Integer, default=0)
+    open_issues = Column(Integer, default=0)
 
-    full_name = Column(String(255), nullable=False)
+    default_branch = Column(String)
+    html_url = Column(String)
 
-    description = Column(String(500), nullable=True)
-
-    language = Column(String(100), nullable=True)
-
-    default_branch = Column(String(100), nullable=False)
-
-    html_url = Column(String(500), nullable=False)
-
-    owner_id = Column(
-        Integer,
-        ForeignKey("users.id"),
-        nullable=False,
-    )
+    user = relationship("User")

@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
+
+from app.dependencies.db import get_db
 from app.auth.dependencies import get_current_user
 from app.models.user import User
-from app.dependencies.db import get_db
-from app.schemas.repository import RepositoryResponse
-from app.services import repository_service
+from app.services.repository_service import sync_repositories
 
 router = APIRouter(
     prefix="/repositories",
@@ -12,34 +12,16 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=list[RepositoryResponse])
-def get_repositories(db: Session = Depends(get_db)):
-    return repository_service.list_repositories(db)
+@router.get("/health")
+def health():
+    return {
+        "message": "Repository module working"
+    }
 
 
-@router.get("/{repo_id}", response_model=RepositoryResponse)
-def get_repository(
-    repo_id: int,
-    db: Session = Depends(get_db)
-):
-    repository = repository_service.get_repository(db, repo_id)
-
-    if repository is None:
-        raise HTTPException(
-            status_code=404,
-            detail="Repository not found"
-        )
-
-    return repository
-
-
-
-@router.post("/sync", response_model=list[RepositoryResponse])
-async def sync_repositories(
-    db: Session = Depends(get_db),
+@router.post("/sync")
+async def sync(
     current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ):
-    return await repository_service.sync_repositories(
-        db,
-        current_user,
-    )
+    return await sync_repositories(current_user, db)
