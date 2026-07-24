@@ -5,6 +5,7 @@ from app.services.user_service import login_user
 from app.dependencies.db import get_db
 from app.schemas.user import UserCreate, UserResponse
 from app.services.user_service import register_user
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(
     prefix="/auth",
@@ -25,12 +26,15 @@ def test():
     return {"status": "success", "message": "Authentication API is working!"}
 
 @router.post("/login", response_model=Token)
-def login(user: UserLogin, db: Session = Depends(get_db)):
+def login(
+    form_data: OAuth2PasswordRequestForm = Depends(),
+    db: Session = Depends(get_db),
+):
     try:
         return login_user(
             db,
-            user.email,
-            user.password,
+            form_data.username,   # Put the email in the username field
+            form_data.password,
         )
     except ValueError as e:
         raise HTTPException(

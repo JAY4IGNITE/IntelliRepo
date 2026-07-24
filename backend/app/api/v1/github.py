@@ -2,17 +2,18 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 import httpx
+from app.core.oauth_state import create_state, get_email_from_state
 
 from app.core.config import settings
 from app.dependencies.db import get_db
 from app.auth.dependencies import get_current_user
 from app.models.user import User
-from app.services import github_service
+
 
 router = APIRouter(
     prefix="/github",
     tags=["GitHub"],
-)
+)   
 
 
 @router.get("/health")
@@ -21,22 +22,46 @@ def github_health():
 
 
 @router.get("/login")
-def github_login():
+def github_login(
+    current_user: User = Depends(get_current_user),
+):
+    state = create_state(current_user.email)
+
     github_url = (
         "https://github.com/login/oauth/authorize"
         f"?client_id={settings.GITHUB_CLIENT_ID}"
+        f"&redirect_uri={settings.GITHUB_REDIRECT_URI}"
+        f"&state={state}"
         "&scope=repo read:user user:email"
     )
 
-    return RedirectResponse(github_url)
-
+    return RedirectResponse(url=github_url)
 
 @router.get("/callback")
 async def github_callback(
     code: str,
+    state: str,
     db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user),
-):
+):  
+    email = get_email_from_state(state)
+
+    if email is None:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid OAuth state"
+        )
+
+    current_user = (
+        db.query(User)
+        .filter(User.email == email)
+        .first()
+    )
+
+    if current_user is None:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
     token_url = "https://github.com/login/oauth/access_token"
 
     async with httpx.AsyncClient() as client:
@@ -46,10 +71,11 @@ async def github_callback(
                 "Accept": "application/json"
             },
             data={
-                "client_id": settings.GITHUB_CLIENT_ID,
-                "client_secret": settings.GITHUB_CLIENT_SECRET,
-                "code": code,
-            },
+        "client_id": settings.GITHUB_CLIENT_ID,
+        "client_secret": settings.GITHUB_CLIENT_SECRET,
+        "code": code,
+        "redirect_uri": settings.GITHUB_REDIRECT_URI,
+        }
         )
 
     token_data = token_response.json()
@@ -72,6 +98,11 @@ async def github_callback(
         )
 
     github_user = user_response.json()
+    if user_response.status_code != 200:
+        raise HTTPException(
+            status_code=400,
+            detail=github_user,
+        )
 
     current_user.github_id = str(github_user["id"])
     current_user.github_username = github_user["login"]
