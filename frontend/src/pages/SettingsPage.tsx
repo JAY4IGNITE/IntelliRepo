@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 import { useSearchParams } from 'react-router-dom'
 import { FiGithub, FiCheck, FiUser, FiMail } from 'react-icons/fi'
 import { useAuth } from '../context/AuthContext'
@@ -43,11 +44,10 @@ export function SettingsPage() {
       </div>
 
       {notification && (
-        <div className={`p-4 rounded-xl border text-sm ${
-          notification.includes('success')
-            ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-            : 'bg-red-500/10 border-red-500/20 text-red-400'
-        }`}>
+        <div className={`p-4 rounded-xl border text-sm ${notification.includes('success')
+          ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+          : 'bg-red-500/10 border-red-500/20 text-red-400'
+          }`}>
           {notification}
         </div>
       )}

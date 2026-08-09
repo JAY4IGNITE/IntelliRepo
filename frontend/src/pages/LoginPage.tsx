@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Input } from '../components/Input'
@@ -73,7 +74,7 @@ export function LoginPage() {
             Create one
           </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   )
 }

@@ -85,8 +85,8 @@ export function RepositoriesPage() {
         <motion.div
           variants={fadeUp}
           className={`p-3 rounded-lg text-sm border ${syncMessage.includes('failed') || syncMessage.includes('not connected')
-              ? 'bg-red-500/10 border-red-500/20 text-red-400'
-              : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+            ? 'bg-red-500/10 border-red-500/20 text-red-400'
+            : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
             }`}
         >
           {syncMessage}
