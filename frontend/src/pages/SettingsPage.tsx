@@ -36,7 +36,7 @@ export function SettingsPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-3xl mx-auto space-y-6">
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="p-6 lg:p-8 max-w-3xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-white">Settings</h1>
         <p className="text-surface-400 mt-1">Manage your account and integrations</p>
@@ -52,7 +52,7 @@ export function SettingsPage() {
         </div>
       )}
 
-      <div className="rounded-xl border border-surface-800 bg-surface-900 overflow-hidden">
+      <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-800 bg-surface-900 overflow-hidden shadow-sm shadow-black/20">
         <div className="p-5 border-b border-surface-800">
           <h2 className="font-semibold text-white">Profile</h2>
         </div>
@@ -89,7 +89,7 @@ export function SettingsPage() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-surface-800 bg-surface-900 overflow-hidden">
+      <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-800 bg-surface-900 overflow-hidden shadow-sm shadow-black/20">
         <div className="p-5 border-b border-surface-800">
           <h2 className="font-semibold text-white">Integrations</h2>
         </div>

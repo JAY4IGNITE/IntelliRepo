@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { type ReactNode } from 'react'
 
 interface StatCardProps {
@@ -17,15 +18,19 @@ const colorMap = {
 
 export function StatCard({ label, value, icon, trend, color = 'primary' }: StatCardProps) {
   return (
-    <div className={`rounded-xl border bg-gradient-to-br p-5 ${colorMap[color]}`}>
-      <div className="flex items-start justify-between">
+    <motion.div
+      whileHover={{ y: -2 }}
+      transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+      className={`rounded-3xl border bg-gradient-to-br p-5 shadow-sm shadow-black/10 ${colorMap[color]}`}
+    >
+      <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm text-surface-400 mb-1">{label}</p>
-          <p className="text-3xl font-bold text-white">{value}</p>
-          {trend && <p className="text-xs text-surface-500 mt-1">{trend}</p>}
+          <p className="text-sm text-surface-400 mb-2">{label}</p>
+          <p className="text-3xl font-semibold text-white">{value}</p>
+          {trend && <p className="text-xs text-surface-300 mt-1">{trend}</p>}
         </div>
-        <div className="p-2.5 rounded-lg bg-surface-800/50">{icon}</div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white">{icon}</div>
       </div>
-    </div>
+    </motion.div>
   )
 }

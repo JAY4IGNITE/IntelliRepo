@@ -1,11 +1,14 @@
 import { useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { FiRefreshCw, FiSearch, FiGitBranch } from 'react-icons/fi'
+import { motion } from 'framer-motion'
 import { repoApi } from '../lib/api'
 import { RepoCard } from '../components/RepoCard'
 import { Button } from '../components/Button'
+import { Input } from '../components/Input'
 import { useAuth } from '../context/AuthContext'
 import { Link } from 'react-router-dom'
+import { fadeUp, staggerContainer } from '../animations/variants'
 
 export function RepositoriesPage() {
   const { user } = useAuth()
@@ -43,8 +46,13 @@ export function RepositoriesPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={staggerContainer}
+      className="p-6 lg:p-8 max-w-7xl mx-auto space-y-6"
+    >
+      <motion.div variants={fadeUp} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Repositories</h1>
           <p className="text-surface-400 mt-1">
@@ -55,43 +63,45 @@ export function RepositoriesPage() {
           onClick={handleSync}
           loading={syncing}
           disabled={!user?.github_username}
+          variant="secondary"
         >
           <FiRefreshCw className="w-4 h-4" />
           Sync from GitHub
         </Button>
-      </div>
+      </motion.div>
 
       {!user?.github_username && (
-        <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-5">
+        <motion.div variants={fadeUp} className="rounded-3xl border border-amber-500/20 bg-amber-500/5 p-5">
           <p className="text-amber-400 font-medium">GitHub not connected</p>
           <p className="text-sm text-surface-400 mt-1">
             Connect your GitHub account in{' '}
             <Link to="/settings" className="text-primary-400 hover:underline">Settings</Link>{' '}
             to sync repositories.
           </p>
-        </div>
+        </motion.div>
       )}
 
       {syncMessage && (
-        <div className={`p-3 rounded-lg text-sm border ${
-          syncMessage.includes('failed') || syncMessage.includes('not connected')
-            ? 'bg-red-500/10 border-red-500/20 text-red-400'
-            : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-        }`}>
+        <motion.div
+          variants={fadeUp}
+          className={`p-3 rounded-lg text-sm border ${syncMessage.includes('failed') || syncMessage.includes('not connected')
+              ? 'bg-red-500/10 border-red-500/20 text-red-400'
+              : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+            }`}
+        >
           {syncMessage}
-        </div>
+        </motion.div>
       )}
 
-      <div className="relative">
+      <motion.div variants={fadeUp} className="relative">
         <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-500" />
-        <input
-          type="text"
-          placeholder="Search repositories..."
+        <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-surface-900 border border-surface-800 text-white placeholder-surface-500 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500"
+          placeholder="Search repositories..."
+          className="pl-10"
         />
-      </div>
+      </motion.div>
 
       {isLoading ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
