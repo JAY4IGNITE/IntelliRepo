@@ -122,7 +122,7 @@ export function DashboardPage() {
               </BarChart>
             </ResponsiveContainer>
           ) : (
-            <div className="h-60 flex items-center justify-center text-surface-500 text-sm">
+            <div className="h-60 flex items-center justify-center text-muted-foreground text-sm">
               {reposLoading ? 'Loading...' : 'No language data yet. Sync your repositories.'}
             </div>
           )}
@@ -131,8 +131,8 @@ export function DashboardPage() {
         <div className="rounded-3xl border border-surface-800 bg-surface-900 p-6 shadow-lg shadow-black/10">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-semibold text-white">Top Repositories</h2>
-              <p className="text-sm text-surface-500">Your most active repositories at a glance.</p>
+              <h2 className="text-lg font-semibold text-foreground">Top Repositories</h2>
+              <p className="text-sm text-muted-foreground">Your most active repositories at a glance.</p>
             </div>
             <Link to="/repositories" className="text-sm text-primary-400 hover:text-primary-300">
               View all
@@ -160,7 +160,7 @@ export function DashboardPage() {
               ))}
             </div>
           ) : (
-            <div className="h-60 flex items-center justify-center text-surface-500 text-sm">
+            <div className="h-60 flex items-center justify-center text-muted-foreground text-sm">
               {reposLoading ? 'Loading...' : 'No repositories synced yet.'}
             </div>
           )}

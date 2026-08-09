@@ -54,8 +54,8 @@ export function RepositoriesPage() {
     >
       <motion.div variants={fadeUp} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Repositories</h1>
-          <p className="text-surface-400 mt-1">
+          <h1 className="text-2xl font-bold text-foreground">Repositories</h1>
+          <p className="text-muted-foreground mt-1">
             {repos?.length ?? 0} repositories synced from GitHub
           </p>
         </div>
@@ -94,7 +94,7 @@ export function RepositoriesPage() {
       )}
 
       <motion.div variants={fadeUp} className="relative">
-        <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-500" />
+        <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -106,7 +106,7 @@ export function RepositoriesPage() {
       {isLoading ? (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="rounded-xl border border-surface-800 bg-surface-900 p-5 animate-pulse h-40" />
+            <div key={i} className="rounded-xl border border-surface-200 bg-card p-5 animate-pulse h-40 dark:border-surface-700 dark:bg-surface-900" />
           ))}
         </div>
       ) : filtered && filtered.length > 0 ? (
@@ -117,9 +117,9 @@ export function RepositoriesPage() {
         </div>
       ) : (
         <div className="text-center py-20">
-          <FiGitBranch className="w-12 h-12 text-surface-600 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-surface-300">No repositories found</h3>
-          <p className="text-sm text-surface-500 mt-2">
+          <FiGitBranch className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-muted-foreground">No repositories found</h3>
+          <p className="text-sm text-muted-foreground mt-2">
             {search ? 'Try a different search term' : 'Connect GitHub and sync to get started'}
           </p>
         </div>
