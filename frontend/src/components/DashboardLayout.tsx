@@ -2,6 +2,7 @@ import { NavLink, useNavigate, Outlet } from 'react-router-dom'
 import { FiHome, FiGitBranch, FiSettings, FiLogOut, FiMenu, FiX } from 'react-icons/fi'
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { ThemeToggle } from './ThemeToggle'
 
 const navItems = [
   { to: '/dashboard', icon: FiHome, label: 'Dashboard' },
@@ -29,9 +30,8 @@ export function DashboardLayout() {
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-surface-900 border-r border-surface-800 flex flex-col transform transition-transform duration-200 ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-surface-900 border-r border-surface-800 flex flex-col transform transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          }`}
       >
         <div className="p-6 border-b border-surface-800">
           <div className="flex items-center gap-3">
@@ -52,10 +52,9 @@ export function DashboardLayout() {
               to={to}
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-primary-600/20 text-primary-400 border border-primary-600/30'
-                    : 'text-surface-400 hover:text-surface-100 hover:bg-surface-800'
+                `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
+                  ? 'bg-primary-600/20 text-primary-400 border border-primary-600/30'
+                  : 'text-surface-400 hover:text-surface-100 hover:bg-surface-800'
                 }`
               }
             >
@@ -104,6 +103,23 @@ export function DashboardLayout() {
             {sidebarOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
           </button>
         </header>
+        <div className="flex items-center justify-between gap-4 p-4 border-b border-surface-800 bg-surface-900 lg:hidden">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+              <span className="text-white font-bold text-xs">IR</span>
+            </div>
+            <span className="font-semibold text-white">IntelliRepo</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="p-2 text-surface-400 hover:text-white"
+            >
+              {sidebarOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
+            </button>
+          </div>
+        </div>
         <main className="flex-1 overflow-auto">
           <Outlet />
         </main>

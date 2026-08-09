@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { FiGitBranch, FiShield, FiBarChart2, FiZap, FiArrowRight } from 'react-icons/fi'
 import { Button } from '../components/Button'
+import { ThemeToggle } from '../components/ThemeToggle'
 
 const features = [
   {
@@ -47,6 +48,7 @@ export function LandingPage() {
           </div>
 
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <Link to="/login">
               <Button variant="ghost" size="sm">Sign in</Button>
             </Link>
