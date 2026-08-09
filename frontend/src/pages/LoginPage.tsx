@@ -29,7 +29,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-surface-950 px-4 py-10">
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-10">
       <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-3 mb-6">
@@ -37,11 +37,11 @@ export function LoginPage() {
               <span className="text-white font-bold">IR</span>
             </div>
           </Link>
-          <h1 className="text-3xl font-bold text-white">Welcome back</h1>
-          <p className="text-surface-400 mt-2">Sign in to your IntelliRepo account</p>
+          <h1 className="text-3xl font-bold text-foreground">Welcome back</h1>
+          <p className="text-muted-foreground mt-2">Sign in to your IntelliRepo account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 bg-surface-900 border border-surface-800 rounded-3xl p-6 shadow-xl shadow-black/20">
+        <form onSubmit={handleSubmit} className="space-y-4 bg-card border border-surface-200 dark:bg-surface-900 dark:border-surface-800 rounded-3xl p-6 shadow-xl shadow-slate-900/10">
           {error && (
             <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
               {error}

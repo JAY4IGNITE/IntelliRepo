@@ -50,7 +50,7 @@ export function RepositoriesPage() {
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="p-6 lg:p-8 max-w-7xl mx-auto space-y-6"
+      className="p-6 lg:p-8 max-w-7xl mx-auto space-y-6 bg-background text-foreground"
     >
       <motion.div variants={fadeUp} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -71,7 +71,7 @@ export function RepositoriesPage() {
       </motion.div>
 
       {!user?.github_username && (
-        <motion.div variants={fadeUp} className="rounded-3xl border border-amber-500/20 bg-amber-500/5 p-5">
+        <motion.div variants={fadeUp} className="rounded-3xl border border-amber-500/20 bg-amber-500/10 p-5">
           <p className="text-amber-400 font-medium">GitHub not connected</p>
           <p className="text-sm text-surface-400 mt-1">
             Connect your GitHub account in{' '}

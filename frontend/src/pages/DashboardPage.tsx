@@ -38,7 +38,7 @@ export function DashboardPage() {
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="p-6 lg:p-8 max-w-7xl mx-auto space-y-8"
+      className="p-6 lg:p-8 max-w-7xl mx-auto space-y-8 bg-background text-foreground"
     >
       <motion.div variants={fadeUp} className="space-y-2">
         <h1 className="text-2xl font-bold text-white">Welcome back, {user?.username}</h1>
