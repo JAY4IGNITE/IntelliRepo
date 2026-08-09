@@ -80,7 +80,7 @@ export function RegisterPage() {
           </Button>
         </form>
 
-        <p className="text-center text-sm text-surface-400 mt-6">
+        <p className="text-center text-sm text-muted-foreground mt-6">
           Already have an account?{' '}
           <Link to="/login" className="text-primary-400 hover:text-primary-300 font-medium">
             Sign in

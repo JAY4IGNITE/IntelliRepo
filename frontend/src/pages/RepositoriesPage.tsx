@@ -73,7 +73,7 @@ export function RepositoriesPage() {
       {!user?.github_username && (
         <motion.div variants={fadeUp} className="rounded-3xl border border-amber-500/20 bg-amber-500/10 p-5">
           <p className="text-amber-400 font-medium">GitHub not connected</p>
-          <p className="text-sm text-surface-400 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             Connect your GitHub account in{' '}
             <Link to="/settings" className="text-primary-400 hover:underline">Settings</Link>{' '}
             to sync repositories.

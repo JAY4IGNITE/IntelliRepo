@@ -42,7 +42,7 @@ export function RepoCard({ repo }: RepoCardProps) {
           href={repo.html_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded-2xl text-surface-400 hover:text-primary-300 hover:bg-primary-500/10 transition"
+          className="p-2 rounded-2xl text-muted-foreground hover:text-primary-300 hover:bg-primary-500/10 transition"
         >
           <FiExternalLink className="w-4 h-4" />
         </a>
