@@ -16,6 +16,8 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: EmailStr
+    github_username: str | None = None
+    github_avatar_url: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
 

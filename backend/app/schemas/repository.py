@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class RepositoryResponse(BaseModel):
@@ -10,7 +10,15 @@ class RepositoryResponse(BaseModel):
     stars: int
     forks: int
     open_issues: int
+    default_branch: str | None = None
     html_url: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
+
+
+class DashboardStats(BaseModel):
+    total_repos: int
+    total_stars: int
+    total_forks: int
+    total_issues: int
+    languages: dict[str, int]
