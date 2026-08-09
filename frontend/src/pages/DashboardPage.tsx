@@ -91,7 +91,7 @@ export function DashboardPage() {
           icon={<FiAlertCircle className="w-5 h-5" />}
           color="red"
         />
-      </div>
+      </motion.div>
 
       <motion.div variants={fadeUp} className="grid lg:grid-cols-2 gap-6">
         <div className="rounded-3xl border border-surface-800 bg-surface-900 p-6 shadow-lg shadow-black/10">

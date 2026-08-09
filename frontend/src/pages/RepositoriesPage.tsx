@@ -124,6 +124,6 @@ export function RepositoriesPage() {
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   )
 }

@@ -87,7 +87,7 @@ export function SettingsPage() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-800 bg-surface-900 overflow-hidden shadow-sm shadow-black/20">
         <div className="p-5 border-b border-surface-800">
@@ -121,7 +121,7 @@ export function SettingsPage() {
             </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }

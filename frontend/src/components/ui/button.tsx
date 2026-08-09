@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { motion } from 'framer-motion'
+import { motion, type HTMLMotionProps } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
@@ -20,6 +20,7 @@ const buttonVariants = cva(
         default: 'h-11 px-5',
         sm: 'h-9 px-3 text-sm',
         lg: 'h-12 px-6 text-base',
+        'icon-sm': 'h-9 w-9 p-2',
       },
     },
     defaultVariants: {
@@ -30,8 +31,9 @@ const buttonVariants = cva(
 )
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<HTMLMotionProps<'button'>, 'ref' | 'children'>,
   VariantProps<typeof buttonVariants> {
+  children?: React.ReactNode
   loading?: boolean
 }
 
