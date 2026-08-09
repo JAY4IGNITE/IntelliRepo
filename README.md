@@ -593,15 +593,41 @@ npm install
 
 # ▶️ Running the Project
 
-Backend:
+## Backend
+
+1. Copy the example environment file and update secrets as needed:
 
 ```bash
-uvicorn main:app --reload
+cd backend
+cp .env.example .env
 ```
 
-Frontend:
+1. Install backend dependencies if not already installed:
 
 ```bash
+python -m pip install -r requirements.txt
+```
+
+1. Start the backend API from the `backend` folder:
+
+```bash
+cd backend
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --log-level info
+```
+
+## Frontend
+
+1. Install frontend dependencies if not already installed:
+
+```bash
+cd frontend
+npm install
+```
+
+1. Start the frontend dev server:
+
+```bash
+cd frontend
 npm run dev
 ```
 
