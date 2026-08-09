@@ -94,7 +94,7 @@ export function DashboardPage() {
       </motion.div>
 
       <motion.div variants={fadeUp} className="grid lg:grid-cols-2 gap-6">
-        <div className="rounded-3xl border border-surface-800 bg-surface-900 p-6 shadow-lg shadow-black/10">
+        <div className="rounded-3xl border border-surface-200 bg-card p-6 shadow-lg shadow-slate-900/10 dark:border-surface-800 dark:bg-surface-900">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-lg font-semibold text-foreground">Languages</h2>
@@ -149,11 +149,11 @@ export function DashboardPage() {
                   <div className="flex items-center gap-3 min-w-0">
                     <FiGitBranch className="w-4 h-4 text-primary-300 shrink-0" />
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{repo.name}</p>
-                      <p className="text-xs text-surface-500">{repo.language || 'Unknown'}</p>
+                      <p className="text-sm font-medium text-foreground dark:text-white truncate">{repo.name}</p>
+                      <p className="text-xs text-muted-foreground">{repo.language || 'Unknown'}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-surface-400 shrink-0">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground shrink-0">
                     <FiStar className="w-3 h-3" /> {repo.stars}
                   </div>
                 </motion.div>

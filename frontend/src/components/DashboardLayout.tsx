@@ -114,7 +114,7 @@ export function DashboardLayout() {
             <ThemeToggle />
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 text-surface-400 hover:text-white"
+              className="p-2 text-muted-foreground hover:text-foreground"
             >
               {sidebarOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
             </button>
