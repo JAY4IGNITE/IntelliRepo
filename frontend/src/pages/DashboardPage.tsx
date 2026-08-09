@@ -41,8 +41,8 @@ export function DashboardPage() {
       className="p-6 lg:p-8 max-w-7xl mx-auto space-y-8 bg-background text-foreground"
     >
       <motion.div variants={fadeUp} className="space-y-2">
-        <h1 className="text-2xl font-bold text-white">Welcome back, {user?.username}</h1>
-        <p className="text-surface-400">Here's an overview of your repository portfolio</p>
+        <h1 className="text-2xl font-bold text-foreground">Welcome back, {user?.username}</h1>
+        <p className="text-muted-foreground">Here's an overview of your repository portfolio</p>
       </motion.div>
 
       {!user?.github_username && (
@@ -97,8 +97,8 @@ export function DashboardPage() {
         <div className="rounded-3xl border border-surface-800 bg-surface-900 p-6 shadow-lg shadow-black/10">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-semibold text-white">Languages</h2>
-              <p className="text-sm text-surface-500">Top languages across your synced repositories.</p>
+              <h2 className="text-lg font-semibold text-foreground">Languages</h2>
+              <p className="text-sm text-muted-foreground">Top languages across your synced repositories.</p>
             </div>
           </div>
           {languageData.length > 0 ? (
@@ -144,7 +144,7 @@ export function DashboardPage() {
                 <motion.div
                   key={repo.id}
                   whileHover={{ y: -2 }}
-                  className="flex items-center justify-between gap-3 rounded-3xl bg-surface-800/70 p-4 transition-all"
+                  className="flex items-center justify-between gap-3 rounded-3xl bg-surface-100/70 p-4 transition-all dark:bg-surface-800/70"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <FiGitBranch className="w-4 h-4 text-primary-300 shrink-0" />

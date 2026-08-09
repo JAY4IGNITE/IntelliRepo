@@ -28,15 +28,15 @@ export function RepoCard({ repo }: RepoCardProps) {
     <motion.article
       whileHover={{ y: -4 }}
       transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-      className="rounded-3xl border border-surface-800 bg-surface-900 p-5 shadow-sm shadow-black/10"
+      className="rounded-3xl border border-surface-200 bg-card p-5 shadow-sm shadow-slate-900/10 dark:border-surface-800 dark:bg-surface-900"
     >
       <div className="flex items-start justify-between gap-3 mb-4">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <FiGitBranch className="w-4 h-4 text-primary-400 shrink-0" />
-            <h3 className="font-semibold text-white truncate">{repo.name}</h3>
+            <h3 className="font-semibold text-foreground dark:text-white truncate">{repo.name}</h3>
           </div>
-          <p className="text-xs text-surface-500 mt-1 truncate">{repo.full_name}</p>
+          <p className="text-xs text-muted-foreground mt-1 truncate">{repo.full_name}</p>
         </div>
         <a
           href={repo.html_url}
@@ -49,10 +49,10 @@ export function RepoCard({ repo }: RepoCardProps) {
       </div>
 
       {repo.description && (
-        <p className="text-sm text-surface-400 mb-5 line-clamp-2">{repo.description}</p>
+        <p className="text-sm text-muted-foreground mb-5 line-clamp-2">{repo.description}</p>
       )}
 
-      <div className="flex flex-wrap gap-3 text-xs text-surface-400">
+      <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
         {repo.language && (
           <span className="inline-flex items-center gap-1 rounded-full bg-surface-800/80 px-3 py-1">
             <span className={`h-2.5 w-2.5 rounded-full ${langColor}`} />

@@ -33,14 +33,14 @@ export function DashboardLayout() {
         className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-card/95 border-r border-surface-200/70 flex flex-col transform transition-transform duration-200 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
           } dark:bg-surface-900 dark:border-surface-800`}
       >
-        <div className="p-6 border-b border-surface-800">
+        <div className="p-6 border-b border-surface-200 dark:border-surface-800">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
               <span className="text-white font-bold text-sm">IR</span>
             </div>
             <div>
-              <h1 className="font-semibold text-white text-lg leading-tight">IntelliRepo</h1>
-              <p className="text-xs text-surface-400">Code Intelligence</p>
+              <h1 className="font-semibold text-foreground dark:text-white text-lg leading-tight">IntelliRepo</h1>
+              <p className="text-xs text-muted-foreground">Code Intelligence</p>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ export function DashboardLayout() {
           </div>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 text-surface-400 hover:text-white"
+            className="p-2 text-muted-foreground hover:text-foreground"
           >
             {sidebarOpen ? <FiX className="w-5 h-5" /> : <FiMenu className="w-5 h-5" />}
           </button>
