@@ -34,16 +34,16 @@ const stats = [
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-surface-950 text-surface-100">
-      <nav className="sticky top-0 z-50 border-b border-surface-800/50 bg-surface-950/90 backdrop-blur-xl">
+    <div className="min-h-screen bg-background text-foreground">
+      <nav className="sticky top-0 z-50 border-b border-surface-200/70 bg-card/95 backdrop-blur-xl dark:border-surface-800 dark:bg-surface-900/95">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-600 to-primary-500 shadow-lg shadow-primary-500/20">
               <span className="text-sm font-semibold text-white">IR</span>
             </div>
             <div>
-              <p className="text-sm font-semibold text-white">IntelliRepo</p>
-              <p className="text-xs text-surface-500">AI-driven codebase intelligence</p>
+              <p className="text-sm font-semibold text-foreground dark:text-white">IntelliRepo</p>
+              <p className="text-xs text-muted-foreground">AI-driven codebase intelligence</p>
             </div>
           </div>
 
