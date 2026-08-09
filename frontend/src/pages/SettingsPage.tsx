@@ -52,8 +52,8 @@ export function SettingsPage() {
         </div>
       )}
 
-      <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-800 bg-surface-900 overflow-hidden shadow-sm shadow-black/20">
-        <div className="p-5 border-b border-surface-800">
+      <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-200 bg-card overflow-hidden shadow-sm shadow-slate-900/10 dark:border-surface-800 dark:bg-surface-900">
+        <div className="p-5 border-b border-surface-200 dark:border-surface-800">
           <h2 className="font-semibold text-foreground dark:text-white">Profile</h2>
         </div>
         <div className="p-5 space-y-4">
@@ -66,8 +66,8 @@ export function SettingsPage() {
               </div>
             )}
             <div>
-              <p className="font-medium text-white text-lg">{user?.username}</p>
-              <p className="text-sm text-surface-400">{user?.email}</p>
+              <p className="font-medium text-foreground dark:text-white text-lg">{user?.username}</p>
+              <p className="text-sm text-muted-foreground">{user?.email}</p>
             </div>
           </div>
           <div className="grid sm:grid-cols-2 gap-4 pt-2">
@@ -89,9 +89,9 @@ export function SettingsPage() {
         </div>
       </motion.div>
 
-      <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-800 bg-surface-900 overflow-hidden shadow-sm shadow-black/20">
-        <div className="p-5 border-b border-surface-800">
-          <h2 className="font-semibold text-white">Integrations</h2>
+      <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-200 bg-card overflow-hidden shadow-sm shadow-slate-900/10 dark:border-surface-800 dark:bg-surface-900">
+        <div className="p-5 border-b border-surface-200 dark:border-surface-800">
+          <h2 className="font-semibold text-foreground dark:text-white">Integrations</h2>
         </div>
         <div className="p-5">
           <div className="flex items-center justify-between gap-4">
@@ -100,7 +100,7 @@ export function SettingsPage() {
                 <FiGithub className="w-5 h-5 text-foreground dark:text-white" />
               </div>
               <div>
-                <p className="font-medium text-white">GitHub</p>
+                <p className="font-medium text-foreground dark:text-white">GitHub</p>
                 {user?.github_username ? (
                   <p className="text-sm text-emerald-400 flex items-center gap-1">
                     <FiCheck className="w-3.5 h-3.5" />

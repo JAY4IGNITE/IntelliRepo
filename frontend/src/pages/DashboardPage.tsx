@@ -128,7 +128,7 @@ export function DashboardPage() {
           )}
         </div>
 
-        <div className="rounded-3xl border border-surface-800 bg-surface-900 p-6 shadow-lg shadow-black/10">
+        <div className="rounded-3xl border border-surface-200 bg-card p-6 shadow-lg shadow-slate-900/10 dark:border-surface-800 dark:bg-surface-900">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-lg font-semibold text-foreground">Top Repositories</h2>

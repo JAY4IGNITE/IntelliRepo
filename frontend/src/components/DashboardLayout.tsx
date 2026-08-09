@@ -64,7 +64,7 @@ export function DashboardLayout() {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-surface-800">
+        <div className="p-4 border-t border-surface-200 dark:border-surface-800">
           <div className="flex items-center gap-3 px-3 py-2 mb-2">
             {user?.github_avatar_url ? (
               <img src={user.github_avatar_url} alt="" className="w-8 h-8 rounded-full" />
@@ -74,13 +74,13 @@ export function DashboardLayout() {
               </div>
             )}
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">{user?.username}</p>
-              <p className="text-xs text-surface-400 truncate">{user?.email}</p>
+              <p className="text-sm font-medium text-foreground dark:text-white truncate">{user?.username}</p>
+              <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
             </div>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-surface-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+            className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-red-400 hover:bg-red-500/10 transition-colors"
           >
             <FiLogOut className="w-5 h-5" />
             Sign out
