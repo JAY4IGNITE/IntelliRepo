@@ -54,20 +54,20 @@ export function RepoCard({ repo }: RepoCardProps) {
 
       <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
         {repo.language && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-surface-800/80 px-3 py-1">
+          <span className="inline-flex items-center gap-1 rounded-full bg-surface-200/80 px-3 py-1 text-foreground dark:bg-surface-700/80 dark:text-white">
             <span className={`h-2.5 w-2.5 rounded-full ${langColor}`} />
             {repo.language}
           </span>
         )}
-        <span className="inline-flex items-center gap-1 rounded-full bg-surface-800/80 px-3 py-1">
+        <span className="inline-flex items-center gap-1 rounded-full bg-surface-200/80 px-3 py-1 text-foreground dark:bg-surface-700/80 dark:text-white">
           <FiStar className="w-3.5 h-3.5" />
           {repo.stars}
         </span>
-        <span className="inline-flex items-center gap-1 rounded-full bg-surface-800/80 px-3 py-1">
+        <span className="inline-flex items-center gap-1 rounded-full bg-surface-200/80 px-3 py-1 text-foreground dark:bg-surface-700/80 dark:text-white">
           <FiGitBranch className="w-3.5 h-3.5" />
           {repo.forks}
         </span>
-        <span className="inline-flex items-center gap-1 rounded-full bg-surface-800/80 px-3 py-1">
+        <span className="inline-flex items-center gap-1 rounded-full bg-surface-200/80 px-3 py-1 text-foreground dark:bg-surface-700/80 dark:text-white">
           <FiAlertCircle className="w-3.5 h-3.5" />
           {repo.open_issues}
         </span>

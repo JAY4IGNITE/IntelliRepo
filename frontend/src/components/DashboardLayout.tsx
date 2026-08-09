@@ -94,7 +94,7 @@ export function DashboardLayout() {
             <div className="w-7 h-7 rounded-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
               <span className="text-white font-bold text-xs">IR</span>
             </div>
-            <span className="font-semibold text-white">IntelliRepo</span>
+            <span className="font-semibold text-foreground dark:text-white">IntelliRepo</span>
           </div>
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -108,7 +108,7 @@ export function DashboardLayout() {
             <div className="w-7 h-7 rounded-md bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
               <span className="text-white font-bold text-xs">IR</span>
             </div>
-            <span className="font-semibold text-white">IntelliRepo</span>
+            <span className="font-semibold text-foreground dark:text-white">IntelliRepo</span>
           </div>
           <div className="flex items-center gap-2">
             <ThemeToggle />

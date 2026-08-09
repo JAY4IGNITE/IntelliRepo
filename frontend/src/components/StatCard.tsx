@@ -25,11 +25,11 @@ export function StatCard({ label, value, icon, trend, color = 'primary' }: StatC
     >
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm text-surface-400 mb-2">{label}</p>
-          <p className="text-3xl font-semibold text-white">{value}</p>
-          {trend && <p className="text-xs text-surface-300 mt-1">{trend}</p>}
+          <p className="text-sm text-muted-foreground mb-2">{label}</p>
+          <p className="text-3xl font-semibold text-foreground dark:text-white">{value}</p>
+          {trend && <p className="text-xs text-muted-foreground mt-1">{trend}</p>}
         </div>
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 text-white">{icon}</div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-100/80 text-foreground dark:bg-surface-800/80 dark:text-white">{icon}</div>
       </div>
     </motion.div>
   )
