@@ -3,27 +3,28 @@ import { motion } from 'framer-motion'
 import { useSearchParams } from 'react-router-dom'
 import { FiGithub, FiCheck, FiUser, FiMail } from 'react-icons/fi'
 import { useAuth } from '../context/AuthContext'
+import { useToast } from '../context/ToastContext'
 import { githubApi } from '../lib/api'
 import { Button } from '../components/Button'
 
 export function SettingsPage() {
   const { user, refreshUser } = useAuth()
+  const { toast } = useToast()
   const [searchParams, setSearchParams] = useSearchParams()
   const [connecting, setConnecting] = useState(false)
-  const [notification, setNotification] = useState('')
 
   useEffect(() => {
     const githubStatus = searchParams.get('github')
     if (githubStatus === 'connected') {
-      setNotification('GitHub account connected successfully!')
+      toast.success('GitHub Connected', 'Your GitHub account has been connected successfully!')
       refreshUser()
       setSearchParams({})
     } else if (githubStatus === 'error') {
       const reason = searchParams.get('reason') || 'unknown'
-      setNotification(`Failed to connect GitHub: ${reason.replace(/_/g, ' ')}`)
+      toast.error('Connection Failed', `Failed to link GitHub: ${reason.replace(/_/g, ' ')}`)
       setSearchParams({})
     }
-  }, [searchParams, refreshUser, setSearchParams])
+  }, [searchParams, refreshUser, setSearchParams, toast])
 
   const handleConnect = async () => {
     setConnecting(true)
@@ -31,7 +32,7 @@ export function SettingsPage() {
       const { data } = await githubApi.connect()
       window.location.href = data.url
     } catch {
-      setNotification('Failed to initiate GitHub connection')
+      toast.error('OAuth Error', 'Failed to initiate GitHub authorization. Please try again.')
       setConnecting(false)
     }
   }
@@ -42,15 +43,6 @@ export function SettingsPage() {
         <h1 className="text-2xl font-bold text-foreground">Settings</h1>
         <p className="text-muted-foreground mt-1">Manage your account and integrations</p>
       </div>
-
-      {notification && (
-        <div className={`p-4 rounded-xl border text-sm ${notification.includes('success')
-          ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-          : 'bg-red-500/10 border-red-500/20 text-red-400'
-          }`}>
-          {notification}
-        </div>
-      )}
 
       <motion.div whileHover={{ y: -2 }} className="rounded-3xl border border-surface-200 bg-card overflow-hidden shadow-sm shadow-slate-900/10 dark:border-surface-800 dark:bg-surface-900">
         <div className="p-5 border-b border-surface-200 dark:border-surface-800">

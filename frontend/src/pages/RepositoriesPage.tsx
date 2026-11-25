@@ -7,15 +7,16 @@ import { RepoCard } from '../components/RepoCard'
 import { Button } from '../components/Button'
 import { Input } from '../components/Input'
 import { useAuth } from '../context/AuthContext'
+import { useToast } from '../context/ToastContext'
 import { Link } from 'react-router-dom'
 import { fadeUp, staggerContainer } from '../animations/variants'
 
 export function RepositoriesPage() {
   const { user } = useAuth()
+  const { toast } = useToast()
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
   const [syncing, setSyncing] = useState(false)
-  const [syncMessage, setSyncMessage] = useState('')
 
   const { data: repos, isLoading } = useQuery({
     queryKey: ['repos'],
@@ -31,15 +32,17 @@ export function RepositoriesPage() {
 
   const handleSync = async () => {
     setSyncing(true)
-    setSyncMessage('')
     try {
       const { data } = await repoApi.sync()
-      setSyncMessage(`Synced ${data.total} repositories (${data.synced.length} new, ${data.updated.length} updated)`)
+      toast.success(
+        'Repositories Synced',
+        `Successfully synced ${data.total} repositories (${data.synced.length} new, ${data.updated.length} updated)`,
+      )
       queryClient.invalidateQueries({ queryKey: ['repos'] })
       queryClient.invalidateQueries({ queryKey: ['stats'] })
     } catch (err: unknown) {
       const msg = (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail
-      setSyncMessage(typeof msg === 'string' ? msg : 'Sync failed')
+      toast.error('Sync Failed', typeof msg === 'string' ? msg : 'Unable to sync repositories from GitHub')
     } finally {
       setSyncing(false)
     }
@@ -78,18 +81,6 @@ export function RepositoriesPage() {
             <Link to="/settings" className="text-primary-400 hover:underline">Settings</Link>{' '}
             to sync repositories.
           </p>
-        </motion.div>
-      )}
-
-      {syncMessage && (
-        <motion.div
-          variants={fadeUp}
-          className={`p-3 rounded-lg text-sm border ${syncMessage.includes('failed') || syncMessage.includes('not connected')
-            ? 'bg-red-500/10 border-red-500/20 text-red-400'
-            : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-            }`}
-        >
-          {syncMessage}
         </motion.div>
       )}
 
