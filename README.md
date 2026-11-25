@@ -3,10 +3,6 @@
 ### Intelligent Codebase Analysis & Engineering Risk Prediction Platform using Artificial Intelligence, Machine Learning, and Knowledge Graphs
 
 <p align="center">
-  <img src="./frontend/src/assets/intellirepo.png" alt="IntelliRepo AI Logo" width="180"/>
-</p>
-
-<p align="center">
   <strong>Upload any GitHub repository and understand its architecture, detect engineering risks, predict bugs, generate documentation, and interact with the entire codebase using natural language.</strong>
 </p>
 
@@ -300,12 +296,11 @@ Analytics & Dashboard
 
 ## Frontend
 
-* Next.js
-* React
+* React 19
+* Vite
 * TypeScript
 * Tailwind CSS
-* React Flow
-* Chart.js
+* Radix UI & Lucide React
 * Framer Motion
 
 ## Backend
@@ -528,35 +523,28 @@ Repository Overview
 # 📁 Project Structure
 
 ```
-IntelliRepo-AI/
+IntelliRepo/
 
-├── frontend/
+├── backend/                # FastAPI application, SQLAlchemy models, Alembic migrations
 │   ├── app/
-│   ├── components/
-│   ├── hooks/
-│   ├── pages/
-│   ├── services/
-│   └── styles/
+│   │   ├── api/v1/         # Route endpoints (auth, users, github, repositories)
+│   │   ├── core/           # Configuration, security, logging
+│   │   ├── database/       # Database engine and sessions
+│   │   ├── models/         # SQLAlchemy database models
+│   │   ├── schemas/        # Pydantic schemas
+│   │   └── services/       # Application services and business logic
+│   └── alembic/            # Database schema migrations
 │
-├── backend/
-│   ├── api/
-│   ├── parser/
-│   ├── ai/
-│   ├── ml/
-│   ├── graph/
-│   ├── database/
-│   ├── services/
-│   ├── utils/
-│   └── models/
+├── frontend/               # React + Vite web dashboard
+│   ├── src/
+│   │   ├── components/     # Reusable UI primitives and layout
+│   │   ├── context/        # Auth and theme context providers
+│   │   ├── pages/          # Application views
+│   │   └── lib/            # API client and utility functions
+│   └── public/             # Static web assets
 │
-├── datasets/
-├── docs/
-├── docker/
-├── scripts/
-├── tests/
-├── notebooks/
-├── README.md
-└── LICENSE
+├── ml-service/             # ML pipeline, feature engineering, and inference services
+└── docker/                 # Containerization and deployment configurations
 ```
 
 ---
@@ -566,7 +554,7 @@ IntelliRepo-AI/
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/IntelliRepo-ai.git
+git clone https://github.com/JAY4IGNITE/IntelliRepo.git
 ```
 
 Backend:
@@ -602,17 +590,17 @@ cd backend
 cp .env.example .env
 ```
 
-1. Install backend dependencies if not already installed:
+2. Install backend dependencies if not already installed:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-1. Start the backend API from the `backend` folder:
+3. Start the backend API from the `backend` folder:
 
 ```bash
 cd backend
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --log-level info
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 ## Frontend
@@ -624,7 +612,7 @@ cd frontend
 npm install
 ```
 
-1. Start the frontend dev server:
+2. Start the frontend dev server:
 
 ```bash
 cd frontend
@@ -635,18 +623,17 @@ npm run dev
 
 # 🔌 API Overview
 
-Core endpoints:
+Core active endpoints (see [API.md](API.md) for full endpoint specifications):
 
 ```
-POST   /upload
-POST   /github
-GET    /repository
-POST   /chat
-GET    /architecture
-GET    /dashboard
-GET    /security
-GET    /ml/predictions
-GET    /documentation
+POST   /auth/register          Register a new account
+POST   /auth/login             Authenticate and obtain JWT access token
+GET    /users/me               Retrieve currently authenticated user profile
+GET    /github/connect         Generate GitHub OAuth authorization URL
+GET    /github/callback        Handle GitHub OAuth authorization callback
+GET    /repositories           List tracked repositories for current user
+GET    /repositories/stats     Summary statistics (stars, forks, languages)
+POST   /repositories/sync      Sync user repositories with connected GitHub account
 ```
 
 ---
@@ -706,17 +693,15 @@ Testing includes:
 
 # 🤝 Contributing
 
-We welcome contributions from developers, researchers, and open-source enthusiasts.
+We welcome contributions from developers, researchers, and open-source enthusiasts. Please review [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines on setting up your environment, code style, and submitting pull requests.
 
-Steps:
+Quick steps:
 
 1. Fork the repository.
-2. Create a feature branch.
-3. Commit your changes.
-4. Push to your branch.
-5. Open a Pull Request.
-
-Please ensure your code follows the project's coding standards and includes appropriate tests.
+2. Create a feature branch (`git checkout -b feature/amazing-feature`).
+3. Commit your changes with clear messages.
+4. Push to your branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request targeting the upstream `main` branch.
 
 ---
 
@@ -733,7 +718,7 @@ This project is released under the MIT License.
 | AI Engineer       | LLM integration, RAG pipeline           |
 | ML Engineer       | Model development and evaluation        |
 | Backend Engineer  | FastAPI, APIs, parser                   |
-| Frontend Engineer | Next.js dashboard and UI                |
+| Frontend Engineer | React dashboard and UI                  |
 | DevOps Engineer   | Deployment and CI/CD                    |
 | Research Engineer | Dataset preparation and experimentation |
 
