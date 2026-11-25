@@ -1,746 +1,279 @@
-<p align="center">IntelliRepo</p>
+<div align="center">
 
-### Intelligent Codebase Analysis & Engineering Risk Prediction Platform using Artificial Intelligence, Machine Learning, and Knowledge Graphs
+  <img src="./frontend/public/favicon.svg" alt="IntelliRepo Logo" width="80" height="80" />
 
-<p align="center">
-  <img src="./frontend/src/assets/intellirepo.png" alt="IntelliRepo AI Logo" width="180"/>
-</p>
+  # IntelliRepo
 
-<p align="center">
-  <strong>Upload any GitHub repository and understand its architecture, detect engineering risks, predict bugs, generate documentation, and interact with the entire codebase using natural language.</strong>
-</p>
+  **AI-Driven Codebase Intelligence & Engineering Risk Prediction Platform**
 
----
+  Analyze repository architecture, predict defect hotspots, evaluate maintainability, and gain actionable codebase insights through automated static parsing and machine learning.
 
-# 📖 Table of Contents
+  <p align="center">
+    <a href="https://github.com/JAY4IGNITE/IntelliRepo/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+    <img src="https://img.shields.io/badge/Python-3.10+-3776AB.svg?logo=python&logoColor=white" alt="Python 3.10+">
+    <img src="https://img.shields.io/badge/FastAPI-0.115+-009688.svg?logo=fastapi&logoColor=white" alt="FastAPI">
+    <img src="https://img.shields.io/badge/React-19-61DAFB.svg?logo=react&logoColor=black" alt="React 19">
+    <img src="https://img.shields.io/badge/Vite-8-646CFF.svg?logo=vite&logoColor=white" alt="Vite">
+    <img src="https://img.shields.io/badge/TailwindCSS-v4-06B6D4.svg?logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+    <a href="https://github.com/JAY4IGNITE/IntelliRepo/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
+  </p>
 
-1. Introduction
-2. Problem Statement
-3. Proposed Solution
-4. Vision
-5. Objectives
-6. Key Features
-7. System Workflow
-8. System Architecture
-9. Technology Stack
-10. Artificial Intelligence Pipeline
-11. Machine Learning Pipeline
-12. Knowledge Graph
-13. Repository Analysis Engine
-14. Feature Engineering
-15. Dashboard
-16. Project Structure
-17. Installation
-18. Configuration
-19. Running the Project
-20. API Overview
-21. Machine Learning Models
-22. Future Scope
-23. Performance Goals
-24. Security
-25. Contributing
-26. License
-27. Team
+  <p align="center">
+    <a href="#-key-features">Key Features</a> •
+    <a href="#-system-architecture">Architecture</a> •
+    <a href="#-system-workflow">Workflow</a> •
+    <a href="#-quickstart">Quickstart</a> •
+    <a href="API.md">API Reference</a> •
+    <a href="CONTRIBUTING.md">Contributing</a>
+  </p>
+
+</div>
 
 ---
 
-# 📚 Introduction
+## 📖 Overview
 
-Modern software projects often consist of thousands of files, hundreds of APIs, multiple services, and complex dependency structures. Understanding these repositories requires significant manual effort, making onboarding slow and increasing maintenance costs.
+Modern software repositories scale rapidly into thousands of files with complex dependency graphs, subtle architectural drift, and uneven test coverage. Understanding codebases, onboarding new developers, and pinpointing defect-prone modules consumes substantial engineering time.
 
-Developers frequently spend several days understanding:
-
-* Project architecture
-* Folder hierarchy
-* Business logic
-* APIs
-* Database models
-* Authentication flow
-* Dependencies
-* Service communication
-
-Traditional documentation is often outdated, incomplete, or missing altogether.
-
-**IntelliRepo AI** addresses this challenge by combining Artificial Intelligence, Machine Learning, Graph Analytics, and Retrieval-Augmented Generation (RAG) to automatically analyze repositories and provide intelligent insights.
+**IntelliRepo** solves this by unifying:
+* **Automated Repository Parsing**: Extracts folder hierarchy, module dependencies, and code metrics.
+* **Predictive Risk Modeling**: Employs machine learning to estimate defect probability, maintainability scores, and complexity hotspots.
+* **Interactive Engineering Dashboard**: Delivers real-time analytics, language breakdowns, and synchronization with GitHub repositories.
+* **Developer-Centric API**: Provides an extensible FastAPI backend with JWT authentication and GitHub OAuth.
 
 ---
 
-# ❗ Problem Statement
+## ✨ Key Features
 
-Software teams face several recurring challenges:
-
-* Large repositories are difficult to understand.
-* Documentation becomes outdated quickly.
-* Developers struggle to identify where functionality is implemented.
-* Security vulnerabilities remain unnoticed.
-* Technical debt grows over time.
-* Predicting defect-prone modules is difficult.
-* Architecture is rarely visualized.
-* Code reviews consume significant engineering time.
+| Feature | Description |
+| :--- | :--- |
+| **GitHub Synchronization** | Seamlessly connect personal and organization GitHub accounts via OAuth to track and sync repositories automatically. |
+| **Predictive Risk Analytics** | Forecast defect-prone modules, cyclomatic complexity anomalies, and maintainability indices using ML models. |
+| **Code Intelligence Dashboard** | Real-time visualization of repository health scores, issue counts, fork/star trajectories, and tech stack distribution. |
+| **Modern API Architecture** | Fully typed, high-performance REST endpoints powered by FastAPI, Pydantic v2, and SQLAlchemy. |
+| **Responsive Design & Theming** | Built with Tailwind CSS v4, Lucide Icons, and accessible Radix UI primitives, with native dark/light theme switching. |
 
 ---
 
-# 💡 Proposed Solution
+## 🏗️ System Architecture
 
-IntelliRepo AI is an intelligent repository analysis platform capable of:
+```mermaid
+flowchart TB
+    subgraph Client["Frontend Client (React 19 + Vite)"]
+        direction TB
+        UI["Interactive Dashboard UI"]
+        Theme["Theme & Auth State"]
+        APIClient["Axios HTTP Client"]
+        UI --- Theme
+        UI --- APIClient
+    end
 
-* Parsing complete repositories.
-* Understanding source code structure.
-* Building software knowledge graphs.
-* Predicting engineering risks using Machine Learning.
-* Answering repository questions using Large Language Models.
-* Automatically generating documentation.
-* Visualizing architecture.
-* Measuring repository quality.
+    subgraph Backend["API Server (FastAPI)"]
+        direction TB
+        Gate["CORS & Request Gateway"]
+        AuthRoute["Auth Router (/auth)"]
+        GHRoute["GitHub Router (/github)"]
+        RepoRoute["Repositories Router (/repositories)"]
+        UserRoute["Users Router (/users)"]
+        ServiceLayer["Business Services Layer"]
 
----
+        Gate --> AuthRoute & GHRoute & RepoRoute & UserRoute
+        AuthRoute & GHRoute & RepoRoute & UserRoute --> ServiceLayer
+    end
 
-# 🎯 Vision
+    subgraph Storage["Data & Intelligence Layer"]
+        direction TB
+        DB[("PostgreSQL Database")]
+        Alembic["Alembic Schema Migrations"]
+        MLService["ML Risk & Feature Engine"]
 
-To build an AI-powered Software Engineering Assistant that enables developers to understand, maintain, and improve any software project within minutes.
+        DB --- Alembic
+    end
 
----
-
-# 🎯 Objectives
-
-* Reduce onboarding time.
-* Improve developer productivity.
-* Detect engineering risks early.
-* Generate documentation automatically.
-* Visualize architecture.
-* Provide intelligent repository search.
-* Predict bug-prone modules.
-* Improve software quality.
-
----
-
-# ✨ Key Features
-
-## Repository Analysis
-
-* GitHub Repository Import
-* ZIP Upload
-* Automatic Repository Parsing
-* Folder Structure Analysis
-* Dependency Detection
-
----
-
-## AI Repository Assistant
-
-Ask questions like:
-
-* Explain the authentication system.
-* How does login work?
-* Show database flow.
-* Where is JWT generated?
-* Which file handles payments?
-* Explain this function.
-* Show API architecture.
-
----
-
-## Architecture Visualization
-
-Interactive graphs displaying:
-
-* Folder hierarchy
-* Module dependencies
-* Function call graph
-* Service communication
-* API flow
-* Database relationships
-
----
-
-## Automatic Documentation
-
-Generates:
-
-* README
-* Setup Guide
-* API Documentation
-* Folder Documentation
-* Function Documentation
-* Architecture Summary
-
----
-
-## Engineering Dashboard
-
-Displays:
-
-* Repository Health Score
-* Complexity Score
-* Security Score
-* Documentation Coverage
-* Duplicate Code
-* Technical Debt
-* Largest Files
-* Dependency Count
-
----
-
-## Semantic Code Search
-
-Instead of keyword matching:
-
-Search:
-
-> "Authentication"
-
-Returns:
-
-* Relevant files
-* Relevant classes
-* APIs
-* Functions
-* Related documentation
-
----
-
-## Security Scanner
-
-Detects:
-
-* Hardcoded Secrets
-* SQL Injection Patterns
-* Weak Authentication
-* Unsafe API Usage
-* Sensitive Information
-* Dependency Vulnerabilities
-
----
-
-## Machine Learning Predictions
-
-Predicts:
-
-* Bug Risk
-* Maintainability
-* Repository Health
-* Security Risk
-* Complexity
-* Duplicate Code
-* Performance Bottlenecks
-
----
-
-# 🔄 System Workflow
-
-```text
-User Uploads Repository
-        │
-        ▼
-Repository Loader
-        │
-        ▼
-Repository Parser
-        │
-        ▼
-Metadata Extraction
-        │
- ┌──────┼────────┐
- ▼      ▼        ▼
-ML     Graph    Embeddings
- │      │         │
- ▼      ▼         ▼
-Predictions   Neo4j   Qdrant
-        │
-        ▼
-LLM Reasoning Engine
-        │
-        ▼
-Interactive Dashboard
+    APIClient <-->|REST API / Bearer JWT| Gate
+    ServiceLayer <-->|SQLAlchemy ORM| DB
+    ServiceLayer <-->|Feature Ingestion| MLService
 ```
 
 ---
 
-# 🏗️ System Architecture
+## 🔄 System Workflow
 
-```
-Frontend (Next.js)
-
-        │
-
-FastAPI Backend
-
-        │
-
-Repository Parser
-
-        │
-
-Tree-sitter
-
-        │
-
-Feature Extraction
-
-        │
-
-──────────────────────────────────────
-
-Knowledge Graph (Neo4j)
-
-Vector Database (Qdrant)
-
-Machine Learning Models
-
-LLM Engine
-
-──────────────────────────────────────
-
-Analytics & Dashboard
+```mermaid
+flowchart LR
+    A["1. User Connects GitHub"] --> B["2. Ingest Metadata & Tree"]
+    B --> C["3. Extract Numerical Features"]
+    C --> D["4. Evaluate Risk Models"]
+    D --> E["5. Display Insights & Health Score"]
 ```
 
----
-
-# 🛠 Technology Stack
-
-## Frontend
-
-* Next.js
-* React
-* TypeScript
-* Tailwind CSS
-* React Flow
-* Chart.js
-* Framer Motion
-
-## Backend
-
-* FastAPI
-* Python
-* Uvicorn
-* Pydantic
-
-## Artificial Intelligence
-
-* LangChain
-* LlamaIndex
-* OpenAI API / Open Source LLM
-* Sentence Transformers
-
-## Machine Learning
-
-* Scikit-learn
-* XGBoost
-* LightGBM
-* CatBoost
-* PyTorch
-
-## Parsing
-
-* Tree-sitter
-* Radon
-* GitPython
-* NetworkX
-
-## Databases
-
-* Neo4j
-* Qdrant
-
-## DevOps
-
-* Docker
-* Docker Compose
-* GitHub Actions
+1. **Authentication & Authorization**: The user authenticates via JWT or GitHub OAuth.
+2. **Repository Sync**: Repositories, commits, issues, and languages are ingested into PostgreSQL.
+3. **Feature Engineering**: Files are parsed to compute metrics such as cyclomatic complexity, function count, nesting depth, and import density.
+4. **Predictive Inference**: ML models classify files by defect risk and compute maintainability indices.
+5. **Dashboard Visualization**: Findings, distribution charts, and health scores are presented in real time.
 
 ---
 
-# 🤖 Artificial Intelligence Pipeline
+## 🛠️ Technology Stack
 
-1. Parse repository.
-2. Extract metadata.
-3. Generate embeddings.
-4. Store embeddings.
-5. Retrieve relevant context.
-6. Send context to LLM.
-7. Generate intelligent response.
-8. Display results.
+| Layer | Technologies |
+| :--- | :--- |
+| **Frontend** | React 19, Vite, TypeScript, Tailwind CSS v4, Radix UI, TanStack Query, Framer Motion, Lucide Icons |
+| **Backend** | FastAPI, Python 3.10+, Uvicorn, SQLAlchemy 2.0, Alembic, Pydantic v2, HTTPX |
+| **Database** | PostgreSQL, Psycopg2 |
+| **Machine Learning** | Scikit-learn, XGBoost, LightGBM (Inference & Training Pipeline) |
+| **DevOps & Tooling** | Docker, Docker Compose, Oxlint, Git |
 
 ---
 
-# 🧠 Machine Learning Pipeline
+## 📁 Project Structure
 
 ```
-Repository
-
-↓
-
-Feature Extraction
-
-↓
-
-Dataset Creation
-
-↓
-
-Preprocessing
-
-↓
-
-Model Training
-
-↓
-
-Evaluation
-
-↓
-
-Prediction
-
-↓
-
-Dashboard
-```
-
----
-
-# 📊 Feature Engineering
-
-Each source file is transformed into structured numerical features.
-
-Examples:
-
-* Lines of Code
-* Cyclomatic Complexity
-* Number of Functions
-* Number of Classes
-* Import Count
-* Dependency Count
-* Comment Density
-* Maximum Nesting Depth
-* Duplicate Code Ratio
-* Git Activity (optional)
-
-These features are used by the ML models.
-
----
-
-# 🧠 Machine Learning Models
-
-## Bug Risk Prediction
-
-Predicts which files are more likely to contain defects.
-
-Model Candidates:
-
-* Random Forest
-* XGBoost
-* LightGBM
-
----
-
-## Repository Health Prediction
-
-Outputs:
-
-```
-Health Score
-
-92 / 100
-```
-
----
-
-## Maintainability Prediction
-
-Categories:
-
-* Excellent
-* Good
-* Moderate
-* Poor
-
----
-
-## Security Risk Prediction
-
-Outputs:
-
-* Low
-* Medium
-* High
-* Critical
-
----
-
-## Complexity Prediction
-
-Outputs:
-
-* Easy
-* Medium
-* Hard
-* Critical
-
----
-
-## Duplicate Code Detection
-
-Uses embeddings to identify semantically similar functions across the repository.
-
----
-
-# 🕸 Knowledge Graph
-
-Nodes:
-
-* Files
-* Classes
-* Functions
-* APIs
-* Database Tables
-
-Relationships:
-
-* Imports
-* Calls
-* Extends
-* Uses
-* Depends On
-
-The graph powers dependency analysis and architecture visualization.
-
----
-
-# 📈 Dashboard
-
-Repository Overview
-
-* Total Files
-* Total Functions
-* Total Classes
-* APIs
-* Modules
-* Dependencies
-* Security Alerts
-* Bug Predictions
-* Health Score
-* Complexity Distribution
-* Documentation Coverage
-
----
-
-# 📁 Project Structure
-
-```
-IntelliRepo-AI/
-
-├── frontend/
+IntelliRepo/
+├── backend/                # FastAPI application backend
+│   ├── alembic/            # Database schema migration scripts
 │   ├── app/
-│   ├── components/
-│   ├── hooks/
-│   ├── pages/
-│   ├── services/
-│   └── styles/
+│   │   ├── api/v1/         # Route handlers: auth, users, github, repositories
+│   │   ├── auth/           # Password hashing, JWT verification, dependencies
+│   │   ├── core/           # Settings, logging, and security configurations
+│   │   ├── database/       # SQLAlchemy engine and session lifecycle
+│   │   ├── models/         # Database entity models
+│   │   ├── repositories/   # Database access layer (data mappers)
+│   │   ├── schemas/        # Pydantic validation schemas
+│   │   └── services/       # Core business logic and external integrations
+│   ├── requirements.txt    # Python dependencies
+│   └── Dockerfile          # Backend container image definition
 │
-├── backend/
-│   ├── api/
-│   ├── parser/
-│   ├── ai/
-│   ├── ml/
-│   ├── graph/
-│   ├── database/
-│   ├── services/
-│   ├── utils/
-│   └── models/
+├── frontend/               # React 19 client application
+│   ├── src/
+│   │   ├── components/     # UI primitives and shared components
+│   │   ├── context/        # Authentication and Theme React contexts
+│   │   ├── lib/            # Axios API client and utility helpers
+│   │   └── pages/          # Dashboard, Repository, and Auth views
+│   ├── package.json        # Frontend dependencies and scripts
+│   └── vite.config.ts      # Vite configuration
 │
-├── datasets/
-├── docs/
-├── docker/
-├── scripts/
-├── tests/
-├── notebooks/
-├── README.md
-└── LICENSE
+├── ml-service/             # Machine learning training, inference, and explainability
+├── docker/                 # Multi-service Docker Compose configurations
+├── API.md                  # Detailed REST API endpoint specification
+└── CONTRIBUTING.md         # Open-source contribution and setup guidelines
 ```
 
 ---
 
-# ⚙️ Installation
+## 🚀 Quickstart
 
-Clone the repository:
+### Prerequisites
+
+Ensure you have installed:
+* [Python 3.10+](https://www.python.org/downloads/)
+* [Node.js 18+](https://nodejs.org/) and `npm`
+* [PostgreSQL 14+](https://www.postgresql.org/)
+
+### 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/IntelliRepo-ai.git
+git clone https://github.com/JAY4IGNITE/IntelliRepo.git
+cd IntelliRepo
 ```
 
-Backend:
+### 2. Configure Backend
 
 ```bash
 cd backend
 
+# Create and activate virtual environment
 python -m venv venv
-
+# On Windows:
+.\venv\Scripts\Activate.ps1
+# On macOS / Linux:
 source venv/bin/activate
 
+# Install dependencies
 pip install -r requirements.txt
-```
 
-Frontend:
-
-```bash
-cd frontend
-
-npm install
-```
-
----
-
-# ▶️ Running the Project
-
-## Backend
-
-1. Copy the example environment file and update secrets as needed:
-
-```bash
-cd backend
+# Setup environment variables
 cp .env.example .env
 ```
 
-1. Install backend dependencies if not already installed:
+Update `backend/.env` with your PostgreSQL database URL, a secure `SECRET_KEY`, and optional GitHub OAuth credentials:
 
-```bash
-python -m pip install -r requirements.txt
+```env
+DATABASE_URL=postgresql+psycopg2://postgres:password@localhost:5432/intellirepo
+SECRET_KEY=generate_a_random_secure_secret_key
+FRONTEND_URL=http://localhost:5173
 ```
 
-1. Start the backend API from the `backend` folder:
+Run database migrations:
 
 ```bash
-cd backend
-python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --log-level info
+alembic upgrade head
 ```
 
-## Frontend
+Start the API server:
 
-1. Install frontend dependencies if not already installed:
+```bash
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+The interactive Swagger documentation will be available at [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+### 3. Configure Frontend
+
+Open a new terminal window:
 
 ```bash
 cd frontend
+
+# Install dependencies
 npm install
-```
 
-1. Start the frontend dev server:
-
-```bash
-cd frontend
+# Start Vite development server
 npm run dev
 ```
 
----
-
-# 🔌 API Overview
-
-Core endpoints:
-
-```
-POST   /upload
-POST   /github
-GET    /repository
-POST   /chat
-GET    /architecture
-GET    /dashboard
-GET    /security
-GET    /ml/predictions
-GET    /documentation
-```
+Visit [http://localhost:5173](http://localhost:5173) in your browser.
 
 ---
 
-# 📊 Performance Goals
+## 🔌 API Summary
 
-* Repository parsing < 30 seconds (medium repositories)
-* AI response time < 5 seconds
-* Architecture graph generation < 10 seconds
-* Semantic search latency < 2 seconds
-* Support repositories with 10,000+ files
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :---: |
+| `POST` | `/auth/register` | Register a new user account | No |
+| `POST` | `/auth/login` | Authenticate and obtain JWT Bearer token | No |
+| `GET` | `/users/me` | Fetch authenticated user profile | Yes |
+| `GET` | `/github/connect` | Generate GitHub OAuth authorization URL | Yes |
+| `GET` | `/github/callback` | Process GitHub OAuth callback | No |
+| `GET` | `/repositories` | List tracked repositories for user | Yes |
+| `GET` | `/repositories/stats` | Aggregate dashboard statistics | Yes |
+| `POST` | `/repositories/sync` | Trigger GitHub repository synchronization | Yes |
 
----
-
-# 🔒 Security
-
-* JWT Authentication
-* Secure API Keys
-* Rate Limiting
-* Input Validation
-* Repository Isolation
-* Role-Based Access Control (RBAC)
-* Secret Management
-* HTTPS Deployment
+For full endpoint documentation, payload schemas, and example responses, see **[API.md](API.md)**.
 
 ---
 
-# 🧪 Testing
+## 🔒 Security & Sensitive Data
 
-Testing includes:
-
-* Unit Tests
-* Integration Tests
-* API Tests
-* Parser Validation
-* ML Model Evaluation
-* UI Testing
+* Never commit `.env` files or hardcoded credentials to version control.
+* Use strong, random strings for `SECRET_KEY`.
+* Store OAuth client secrets and database passwords securely in environment variables.
+* Always keep the `.gitignore` rules updated to prevent accidental credential leakage.
 
 ---
 
-# 🚀 Future Scope
+## 🤝 Contributing
 
-* VS Code Extension
-* GitHub Pull Request Reviewer
-* CI/CD Integration
-* Kubernetes Analysis
-* Docker Analysis
-* Multi-Agent AI Collaboration
-* Auto Refactoring Suggestions
-* Live Repository Monitoring
-* Code Quality Trend Analysis
-* Team Collaboration Features
-* Multi-language Repository Support
-* Engineering Risk Forecasting
+Contributions are welcomed! Whether you want to improve documentation, add features, or report bugs:
+
+1. Review the **[CONTRIBUTING.md](CONTRIBUTING.md)** guide.
+2. Fork the repository and create your feature branch (`git checkout -b feat/new-feature`).
+3. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/).
+4. Submit a Pull Request targeting the upstream `main` branch.
 
 ---
 
-# 🤝 Contributing
+## 📜 License
 
-We welcome contributions from developers, researchers, and open-source enthusiasts.
-
-Steps:
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Commit your changes.
-4. Push to your branch.
-5. Open a Pull Request.
-
-Please ensure your code follows the project's coding standards and includes appropriate tests.
-
----
-
-# 📜 License
-
-This project is released under the MIT License.
-
----
-
-# 👥 Team
-
-| Role              | Responsibility                          |
-| ----------------- | --------------------------------------- |
-| AI Engineer       | LLM integration, RAG pipeline           |
-| ML Engineer       | Model development and evaluation        |
-| Backend Engineer  | FastAPI, APIs, parser                   |
-| Frontend Engineer | Next.js dashboard and UI                |
-| DevOps Engineer   | Deployment and CI/CD                    |
-| Research Engineer | Dataset preparation and experimentation |
-
----
-
-# ⭐ Why IntelliRepo AI?
-
-IntelliRepo AI is more than a documentation generator or chatbot. It combines **repository parsing, retrieval-augmented generation (RAG), knowledge graphs, machine learning, and software engineering analytics** into a unified platform that helps developers understand, maintain, and improve complex codebases faster.
-
-Its long-term vision is to evolve into an intelligent software engineering assistant capable of understanding, analyzing, predicting, and continuously improving software systems throughout their lifecycle.
+This project is licensed under the **[MIT License](LICENSE)**.

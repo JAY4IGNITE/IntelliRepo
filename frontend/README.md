@@ -1,32 +1,64 @@
-# React + TypeScript + Vite
+# IntelliRepo Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The frontend for IntelliRepo is a web dashboard built with **React 19**, **Vite**, **TypeScript**, and **Tailwind CSS v4**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Features
 
-## React Compiler
+* **Dashboard Analytics**: Overview of synchronized repositories, language distributions, and repository health metrics.
+* **GitHub Integration**: Connect and synchronize personal GitHub repositories.
+* **Authentication**: Secure user registration, login, and JWT session handling.
+* **Theme Support**: Seamless Dark/Light mode toggle powered by React Context.
+* **Modern UI Primitives**: Accessible dialogs, tooltips, cards, and buttons powered by Radix UI and Tailwind CSS.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🛠 Available Scripts
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Inside the `frontend` directory, you can run:
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### `npm run dev`
+Starts the Vite local development server with hot module replacement (HMR) at `http://localhost:5173`.
+
+### `npm run build`
+Compiles TypeScript with `tsc -b` and builds optimized static production assets to the `dist/` directory.
+
+### `npm run lint`
+Runs fast code linting via `oxlint`.
+
+### `npm run preview`
+Locally previews the production build output generated in `dist/`.
+
+---
+
+## 📂 Project Structure
+
+```
+frontend/
+├── public/                 # Favicon and static SVGs
+├── src/
+│   ├── animations/         # Framer Motion animation variants
+│   ├── assets/             # Images and local media
+│   ├── components/         # Reusable UI widgets and layout wrappers
+│   │   └── ui/             # Radix UI and Tailwind primitives (buttons, inputs, cards, etc.)
+│   ├── context/            # AuthContext and ThemeContext
+│   ├── lib/                # Axios API client and class utility helpers
+│   ├── pages/              # Views (Dashboard, Repositories, Settings, Login, Register, Landing)
+│   ├── App.tsx             # Root routing and context provider hierarchy
+│   ├── index.css           # Global Tailwind CSS imports and CSS theme variables
+│   └── main.tsx            # Application entry point
+├── package.json
+└── vite.config.ts
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## ⚙️ Environment Variables
+
+Optionally create a `.env` file in the `frontend` root:
+
+```env
+# URL of the backend FastAPI server (defaults to /api or http://127.0.0.1:8000)
+VITE_API_URL=http://127.0.0.1:8000
+```
