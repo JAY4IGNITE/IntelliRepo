@@ -1,4 +1,4 @@
-﻿fastapi>=0.115.0
+fastapi>=0.115.0
 uvicorn[standard]>=0.32.0
 sqlalchemy>=2.0.36
 psycopg2-binary>=2.9.10
@@ -8,6 +8,6 @@ pydantic-settings>=2.6.0
 passlib[bcrypt]>=1.7.4
 python-jose[cryptography]>=3.3.0
 httpx>=0.28.0
-python-multipart>=0.0.12
+python-multipart>=0.0.34
 pytest>=8.0.0
 
